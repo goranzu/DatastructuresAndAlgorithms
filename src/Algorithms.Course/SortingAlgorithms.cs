@@ -1,20 +1,28 @@
+using System.Collections;
+
 namespace Algorithms.Course;
 
 public static class SortingAlgorithms
 {
-    public static void BubbleSort(int[] arr)
+    public static void InsertionSort<T>(T?[] array)
     {
-        for (int i = 0; i < arr.Length; i++)
+        for (int i = 1; i < array.Length; i++)
         {
-            for (int j = 0; j < arr.Length - 1 - i; j++)
+            T? temp = array[i];
+            int j = i - 1;
+
+            while (j >= 0 && Compare(array[j], temp) > 0)
             {
-                if (arr[j] > arr[j + 1])
-                {
-                    var temp = arr[j];
-                    arr[j] = arr[j + 1];
-                    arr[j + 1] = temp;
-                }
+                array[j + 1] = array[j];
+                j--;
             }
+
+            array[j + 1] = temp;
         }
+    }
+
+    private static int Compare<T>(T x, T y)
+    {
+        return Comparer<T>.Default.Compare(x, y);
     }
 }

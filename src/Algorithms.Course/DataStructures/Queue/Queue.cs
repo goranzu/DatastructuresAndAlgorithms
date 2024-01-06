@@ -9,20 +9,20 @@ public sealed class Queue<T> : IQueue<T>
     public void Enqueue(T item)
     {
         Count++;
-        var qNode = new Node<T>(item);
+        var node = new Node<T>(item);
         if (Count == 1)
         {
-            Tail = qNode;
-            Head = qNode;
+            Tail = node;
+            Head = node;
             return;
         }
 
         if (Tail is not null)
         {
-            Tail.Next = qNode;
+            Tail.Next = node;
         }
 
-        Tail = qNode;
+        Tail = node;
     }
 
     public T? Dequeue()

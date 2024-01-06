@@ -12,20 +12,65 @@ public sealed class PriorityQueue<T> : IPriorityQueue<T> where T : IComparable<T
 {
     public int Count { get; private set; } = 0;
     public Node<T>? Head { get; set; }
+    public Node<T>? Tail { get; set; }
 
     public void Enqueue(T item)
     {
-        throw new NotImplementedException();
+        Count++;
+        var node = new Node<T>(item);
+
+        if (Head == null)
+        {
+            Head = node;
+            Tail = node;
+            return;
+        }
+
+        if (Head.Value.CompareTo(item) > 0)
+        {
+            node.Next = Head;
+            Head = node;
+            return;
+        }
+
+        var current = Head;
+        while (current.Next is not null && current.Next.Value.CompareTo(item) <= 0)
+        {
+            current = current.Next;
+        }
+
+        node.Next = current.Next;
+        current.Next = node;
+
+        if (current == Tail)
+        {
+            Tail = node;
+        }
     }
 
     public T? Dequeue()
     {
-        throw new NotImplementedException();
+        if (Head is null)
+        {
+            return default;
+        }
+
+        Count--;
+        var head = Head;
+        Head = Head.Next;
+
+        if (Head is null)
+        {
+            Tail = null;
+        }
+
+        head.Next = null;
+        return head.Value;
     }
 
     public T? Peek()
     {
-        throw new NotImplementedException();
+        return Head is not null ? Head.Value : default;
     }
 }
 

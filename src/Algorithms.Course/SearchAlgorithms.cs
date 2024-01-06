@@ -2,56 +2,33 @@ namespace Algorithms.Course;
 
 public static class SearchAlgorithms
 {
-    public static int TwoCrystalBalls(bool[] breaks)
+    public static int BinarySearch(IEnumerable<int> haystack, int needle)
     {
-        var jmpAmount = (int)Math.Floor(Math.Sqrt(breaks.Length));
-        var i = jmpAmount;
-        for (; i < breaks.Length; i++)
-        {
-            if (breaks[i])
-            {
-                break;
-            }
-        }
-
-        i -= jmpAmount;
-        for (int j = 0; j < jmpAmount && i < breaks.Length; j++, i++)
-        {
-            if (breaks[i])
-            {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    public static bool BinarySearch(int[] haystack, int needle)
-    {
-        Array.Sort(haystack);
-        var l = 0;
-        var h = haystack.Length;
+        var array = haystack as int[] ?? haystack.ToArray();
+        var low = 0;
+        var high = array.Length;
+        var result = -1;
 
         do
         {
-            var m = l + (h - l) / 2;
-            var v = haystack[m];
+            var mid = low + (high - low) / 2;
+            var value = array[mid];
 
-            if (v == needle)
+            if (value == needle)
             {
-                return true;
+                result = mid;
             }
 
-            if (v > needle)
+            if (value > needle)
             {
-                h = m;
+                high = mid;
             }
             else
             {
-                l = m + 1;
+                low = mid + 1;
             }
-        } while (l < h);
+        } while (low < high);
 
-        return false;
+        return result;
     }
 }

@@ -26,4 +26,16 @@
     <ProjectReference Include="..\..\src\Algorithms.Course\Algorithms.Course.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Data\sortingData.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\hashingData.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\graphsData.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
