@@ -1,8 +1,8 @@
 namespace Algorithms.Course;
 
-public static class SearchAlgorithms
+public static class BinarySearch
 {
-    public static int BinarySearch(IEnumerable<int> haystack, int needle)
+    public static int Search(IEnumerable<int> haystack, int needle)
     {
         var array = haystack as int[] ?? haystack.ToArray();
         var low = 0;

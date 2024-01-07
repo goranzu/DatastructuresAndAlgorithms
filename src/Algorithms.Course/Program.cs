@@ -1,9 +1,7 @@
 ﻿using System.Collections;
-using Algorithms.Course;
 
 int[] myArr = [5, 1, 53, 11, 46, 76];
 
-Console.WriteLine($"Binary Search: {SearchAlgorithms.BinarySearch(myArr, 77)}");
 PrintArray(myArr);
 
 return;

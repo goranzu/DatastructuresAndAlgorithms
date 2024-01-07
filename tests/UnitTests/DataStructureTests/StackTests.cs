@@ -1,6 +1,4 @@
-using Algorithms.Course.DataStructures.PriorityQueue;
-
-namespace UnitTests;
+namespace UnitTests.DataStructureTests;
 
 public class StackTests
 {

@@ -1,4 +1,4 @@
-namespace UnitTests;
+namespace UnitTests.DataStructureTests;
 
 public class QueueTests
 {

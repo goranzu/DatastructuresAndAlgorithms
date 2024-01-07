@@ -1,6 +1,6 @@
 using Algorithms.Course.DataStructures.DynamicArray;
 
-namespace UnitTests;
+namespace UnitTests.DataStructureTests;
 
 public class DynamicArrayTests
 {

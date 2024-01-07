@@ -1,4 +1,4 @@
-﻿namespace UnitTests;
+﻿namespace UnitTests.SortingTests;
 
 public sealed class SortingData
 {

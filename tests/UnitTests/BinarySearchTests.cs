@@ -1,5 +1,6 @@
 ﻿using Algorithms.Course;
 using Newtonsoft.Json;
+using UnitTests.SortingTests;
 
 namespace UnitTests;
 
@@ -22,7 +23,7 @@ public class BinarySearchTests
         const int needle = 1;
         const int expectedIndex = 0;
 
-        var result = SearchAlgorithms.BinarySearch(haystack, needle);
+        var result = BinarySearch.Search(haystack, needle);
 
         Assert.Equal(expectedIndex, result);
     }
@@ -34,7 +35,7 @@ public class BinarySearchTests
         const int needle = 100;
         const int expected = -1;
 
-        var result = SearchAlgorithms.BinarySearch(haystack, needle);
+        var result = BinarySearch.Search(haystack, needle);
 
         Assert.Equal(expected, result);
     }
