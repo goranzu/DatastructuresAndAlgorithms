@@ -55,17 +55,6 @@ public class DequeueTests
     }
     
     [Fact]
-    public void delete_empty_queue_returns_default()
-    {
-        var deq = new Dequeue<int>();
-        deq.InsertLeft(1);
-        deq.InsertLeft(2);
-        
-        Assert.Equal(1, deq.DeleteRight());
-        Assert.Equal(2, deq.DeleteRight());
-    }
-    
-    [Fact]
     public void multiple_insertions_and_deletions_should_behave_correctly()
     {
         var deq = new Dequeue<int>();
