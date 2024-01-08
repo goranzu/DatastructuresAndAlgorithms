@@ -5,7 +5,7 @@ namespace UnitTests.DataStructureTests;
 public class PriorityQueueTests
 {
     [Fact]
-    public void Enqueue_SingleItem_CountIncreases()
+    public void Add_SingleItem_CountIncreases()
     {
         var queue = new PriorityQueue<Person>();
 
@@ -15,7 +15,7 @@ public class PriorityQueueTests
     }
 
     [Fact]
-    public void Enqueue_MultipleItems_CorrectOrder()
+    public void Add_MultipleItems_CorrectOrder()
     {
         var queue = new PriorityQueue<Person>();
         var person1 = new Person { Name = "Alice", Age = 30 };
@@ -32,7 +32,7 @@ public class PriorityQueueTests
     }
 
     [Fact]
-    public void Dequeue_EmptyQueue_ReturnsDefault()
+    public void Poll_EmptyQueue_ReturnsDefault()
     {
         var queue = new PriorityQueue<Person>();
 
@@ -42,7 +42,7 @@ public class PriorityQueueTests
     }
 
     [Fact]
-    public void Dequeue_ItemsExist_ReturnsItemAndDecreasesCount()
+    public void Poll_ItemsExist_ReturnsItemAndDecreasesCount()
     {
         var queue = new PriorityQueue<Person>();
         var person = new Person { Name = "Alice", Age = 30 };
@@ -74,6 +74,6 @@ public class PriorityQueueTests
         var peeked = queue.Peek();
 
         Assert.Equal(person, peeked);
-        Assert.Equal(1, queue.Count); // Count should not change
+        Assert.Equal(1, queue.Count);
     }
 }
