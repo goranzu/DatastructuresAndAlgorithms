@@ -3,8 +3,8 @@ namespace Algorithms.Course.DataStructures.PriorityQueue;
 public interface IPriorityQueue<T> where T : IComparable<T>
 {
     int Count { get; }
-    void Enqueue(T item);
-    T? Dequeue();
+    void Add(T item);
+    T? Poll();
     T? Peek();
 }
 
@@ -14,7 +14,7 @@ public sealed class PriorityQueue<T> : IPriorityQueue<T> where T : IComparable<T
     public Node<T>? Head { get; set; }
     public Node<T>? Tail { get; set; }
 
-    public void Enqueue(T item)
+    public void Add(T item)
     {
         Count++;
         var node = new Node<T>(item);
@@ -48,7 +48,7 @@ public sealed class PriorityQueue<T> : IPriorityQueue<T> where T : IComparable<T
         }
     }
 
-    public T? Dequeue()
+    public T? Poll()
     {
         if (Head is null)
         {

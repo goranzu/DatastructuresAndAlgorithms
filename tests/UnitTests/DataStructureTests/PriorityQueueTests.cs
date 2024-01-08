@@ -9,7 +9,7 @@ public class PriorityQueueTests
     {
         var queue = new PriorityQueue<Person>();
 
-        queue.Enqueue(new Person { Name = "Alice", Age = 30 });
+        queue.Add(new Person { Name = "Alice", Age = 30 });
 
         Assert.Equal(1, queue.Count);
     }
@@ -22,13 +22,13 @@ public class PriorityQueueTests
         var person2 = new Person { Name = "Bob", Age = 25 };
         var person3 = new Person { Name = "Carol", Age = 35 };
 
-        queue.Enqueue(person1);
-        queue.Enqueue(person2);
-        queue.Enqueue(person3);
+        queue.Add(person1);
+        queue.Add(person2);
+        queue.Add(person3);
 
-        Assert.Equal(person2, queue.Dequeue()); // Bob should be first (youngest)
-        Assert.Equal(person1, queue.Dequeue()); // Then Alice
-        Assert.Equal(person3, queue.Dequeue()); // Finally Carol
+        Assert.Equal(person2, queue.Poll()); // Bob should be first (youngest)
+        Assert.Equal(person1, queue.Poll()); // Then Alice
+        Assert.Equal(person3, queue.Poll()); // Finally Carol
     }
 
     [Fact]
@@ -36,7 +36,7 @@ public class PriorityQueueTests
     {
         var queue = new PriorityQueue<Person>();
 
-        var result = queue.Dequeue();
+        var result = queue.Poll();
 
         Assert.Null(result);
     }
@@ -46,9 +46,9 @@ public class PriorityQueueTests
     {
         var queue = new PriorityQueue<Person>();
         var person = new Person { Name = "Alice", Age = 30 };
-        queue.Enqueue(person);
+        queue.Add(person);
 
-        var dequeued = queue.Dequeue();
+        var dequeued = queue.Poll();
 
         Assert.Equal(person, dequeued);
         Assert.Equal(0, queue.Count);
@@ -69,7 +69,7 @@ public class PriorityQueueTests
     {
         var queue = new PriorityQueue<Person>();
         var person = new Person { Name = "Alice", Age = 30 };
-        queue.Enqueue(person);
+        queue.Add(person);
 
         var peeked = queue.Peek();
 
