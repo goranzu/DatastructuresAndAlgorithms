@@ -54,9 +54,11 @@ public sealed class DynamicArray<T> : IDynamicArray<T>
 
             for (var i = Count; i > index; i--)
             {
+                // shift all items on place to the right from the index i want to insert in
                 _data[i] = _data[i - 1];
             }
 
+            // insert at the index
             _data[index] = value;
             Count++;
         }
@@ -69,6 +71,7 @@ public sealed class DynamicArray<T> : IDynamicArray<T>
             Array.Resize(ref _data, Capacity * 2);
         }
 
+        // add to the end
         _data[Count] = item;
         Count++;
     }
@@ -85,11 +88,13 @@ public sealed class DynamicArray<T> : IDynamicArray<T>
             Array.Resize(ref _data, Capacity * 2);
         }
 
+        // shift all to the right one place
         for (var i = Count; i > index; i--)
         {
             _data[i] = _data[i - 1];
         }
 
+        // insert at the index
         _data[index] = item;
         Count++;
     }
@@ -161,6 +166,7 @@ public sealed class DynamicArray<T> : IDynamicArray<T>
         {
             if (comparer.Equals(item, _data[i]))
             {
+                // if found, shift all one place to left from the index it is found at
                 for (var j = i; j < Count - 1; j++)
                 {
                     _data[j] = _data[j + 1];

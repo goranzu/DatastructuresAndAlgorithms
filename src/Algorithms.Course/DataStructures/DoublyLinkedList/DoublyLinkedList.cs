@@ -79,25 +79,22 @@ public sealed class DoublyLinkedList<T> : IDoublyLinkedList<T>
             {
                 if (i == index)
                 {
-                    newNode.Next = current.Next;
-                    newNode.Prev = current;
-                    if (newNode.Next is not null)
-                    {
-                        newNode.Next.Prev = newNode;
-                    }
+                    newNode.Next = current;
+                    newNode.Prev = current.Prev;
 
                     if (current.Prev is not null)
                     {
                         current.Prev.Next = newNode;
                     }
 
-                    Count++;
-                    return;
+                    current.Prev = newNode;
                 }
 
                 current = current.Next;
                 i++;
             }
+
+            Count++;
         }
     }
 
