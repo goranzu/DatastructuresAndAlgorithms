@@ -2,6 +2,39 @@
 
 public static class MergeSort
 {
+    public static void SortWithOutParallelism<T>(T?[] array)
+    {
+        var length = array.Length;
+        if (length <= 1)
+        {
+            return;
+        }
+
+        var middle = length / 2;
+        var leftArray = new T?[middle];
+        var rightArray = new T?[length - middle];
+
+        var i = 0;
+        var j = 0;
+
+        for (; i < length; i++)
+        {
+            if (i < middle)
+            {
+                leftArray[i] = array[i];
+            }
+            else
+            {
+                rightArray[j] = array[i];
+                j++;
+            }
+        }
+
+        Sort(leftArray);
+        Sort(rightArray);
+        Merge(leftArray, rightArray, array);
+    }
+
     public static void Sort<T>(T?[] array)
     {
         var length = array.Length;
