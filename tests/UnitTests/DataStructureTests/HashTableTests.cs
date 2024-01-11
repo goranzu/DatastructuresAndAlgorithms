@@ -107,4 +107,37 @@ public class HashTableTests
 
         Assert.Equal(expectedCount, hashTable.Count);
     }
+
+    [Fact]
+    public void should_update_existing_item_in_the_hashtable()
+    {
+        HashTable<string, List<int>> hashTable = new(_data.hashtabelsleutelswaardes.Count);
+        foreach (var item in _data.hashtabelsleutelswaardes)
+        {
+            hashTable.Insert(item.Key, item.Value);
+        }
+
+        var keyToUpdate = "a";
+        var newValue = new List<int> { 999 };
+        hashTable.Update(keyToUpdate, newValue);
+
+        var updatedValue = hashTable.Search(keyToUpdate);
+        Assert.NotNull(updatedValue);
+        Assert.Equal(newValue, updatedValue);
+    }
+
+    [Fact]
+    public void should_handle_updating_non_existing_keys()
+    {
+        HashTable<string, List<int>> hashTable = new(_data.hashtabelsleutelswaardes.Count);
+        foreach (var item in _data.hashtabelsleutelswaardes)
+        {
+            hashTable.Insert(item.Key, item.Value);
+        }
+
+        var nonExistingKey = "doesnotexist";
+        var nonExistingValue = new List<int> { 111 };
+        hashTable.Update(nonExistingKey, nonExistingValue);
+        Assert.Equal(default, hashTable.Search(nonExistingKey));
+    }
 }

@@ -6,4 +6,5 @@ using Benchmarks;
 // BenchmarkRunner.Run<MergeSortBenchmarks>();
 // BenchmarkRunner.Run<QuickSortBenchmarks>();
 // BenchmarkRunner.Run<SelectionSortBenchmarks>();
-BenchmarkRunner.Run<SortingBenchMarks>();
+// BenchmarkRunner.Run<SortingBenchMarks>();
+BenchmarkRunner.Run<HashTableBenchmarks>();

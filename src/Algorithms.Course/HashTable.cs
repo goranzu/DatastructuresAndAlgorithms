@@ -1,6 +1,15 @@
 ﻿namespace Algorithms.Course;
 
-public class HashTable<TKey, TValue>
+public interface IHashTable<in TKey, TValue>
+{
+    int Count { get; }
+    void Insert(TKey key, TValue? value);
+    TValue? Search(TKey key);
+    void Remove(TKey key);
+    void Update(TKey key, TValue newValue);
+}
+
+public class HashTable<TKey, TValue> : IHashTable<TKey, TValue>
 {
     private class HashNode
     {
@@ -115,5 +124,22 @@ public class HashTable<TKey, TValue>
         }
 
         Count--;
+    }
+
+    public void Update(TKey key, TValue newValue)
+    {
+        var bucketIndex = GetBucketIndex(key);
+        HashNode? head = _buckets[bucketIndex];
+
+        while (head is not null)
+        {
+            if (head.Key is not null && head.Key.Equals(key))
+            {
+                head.Value = newValue;
+                return;
+            }
+
+            head = head.Next;
+        }
     }
 }
