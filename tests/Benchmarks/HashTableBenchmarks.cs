@@ -8,23 +8,18 @@ public class HashTableBenchmarks
 {
     private HashTable<string, List<int>> _hashTable;
     private List<KeyValuePair<string, List<int>>> _data;
-    private string _keyToSearch;
-    private string _keyToUpdate;
-    private string _keyToRemove;
     private List<int> _newValue;
     private Random _random;
 
-    [Params(100, 10_000)] public int N;
+    [Params(100, 1_000, 10_000, 100_000)] public int N;
 
     [GlobalSetup]
     public void Setup()
     {
         _hashTable = new HashTable<string, List<int>>(N);
         _data = GenerateData(N);
-        _keyToSearch = _data[N / 2].Key;
-        _keyToUpdate = _data[N / 4].Key;
-        _keyToRemove = _data[3 * N / 4].Key;
         _newValue = [-1];
+        _random = new Random();
 
         foreach (var keyValuePair in _data)
         {
@@ -33,16 +28,24 @@ public class HashTableBenchmarks
     }
 
     /*
-       | Method | N     | Mean           | Error         | StdDev        | Gen0    | Gen1    | Allocated |
-       |------- |------ |---------------:|--------------:|--------------:|--------:|--------:|----------:|
-       | Insert | 100   |   1,944.636 ns |    38.8111 ns |    38.1176 ns |  0.5836 |  0.0038 |    4888 B |
-       | Search | 100   |       3.545 ns |     0.0122 ns |     0.0095 ns |       - |       - |         - |
-       | Update | 100   |       4.214 ns |     0.0132 ns |     0.0117 ns |       - |       - |         - |
-       | Remove | 100   |       3.305 ns |     0.0225 ns |     0.0211 ns |       - |       - |         - |
-       | Insert | 10000 | 336,516.327 ns | 4,194.7487 ns | 3,923.7706 ns | 57.1289 | 14.1602 |  480088 B |
-       | Search | 10000 |       6.409 ns |     0.0407 ns |     0.0381 ns |       - |       - |         - |
-       | Update | 10000 |       7.073 ns |     0.0240 ns |     0.0225 ns |       - |       - |         - |
-       | Remove | 10000 |       7.518 ns |     0.0282 ns |     0.0264 ns |       - |       - |         - |
+       | Method | N      | Mean             | Error         | StdDev        | Gen0     | Gen1     | Gen2     | Allocated |
+       |------- |------- |-----------------:|--------------:|--------------:|---------:|---------:|---------:|----------:|
+       | Insert | 100    |      2,024.11 ns |     29.375 ns |     27.477 ns |   0.5836 |   0.0038 |        - |    4888 B |
+       | Search | 100    |         20.84 ns |      0.064 ns |      0.060 ns |        - |        - |        - |         - |
+       | Update | 100    |         22.15 ns |      0.034 ns |      0.031 ns |        - |        - |        - |         - |
+       | Remove | 100    |         14.40 ns |      0.013 ns |      0.010 ns |        - |        - |        - |         - |
+       | Insert | 1000   |     25,696.00 ns |    133.509 ns |    124.885 ns |   5.7373 |   0.0305 |        - |   48088 B |
+       | Search | 1000   |         22.74 ns |      0.108 ns |      0.101 ns |        - |        - |        - |         - |
+       | Update | 1000   |         23.36 ns |      0.093 ns |      0.087 ns |        - |        - |        - |         - |
+       | Remove | 1000   |         15.40 ns |      0.036 ns |      0.033 ns |        - |        - |        - |         - |
+       | Insert | 10000  |    333,377.86 ns |  3,921.893 ns |  3,668.541 ns |  57.1289 |  14.1602 |        - |  480088 B |
+       | Search | 10000  |         30.57 ns |      0.630 ns |      1.086 ns |        - |        - |        - |         - |
+       | Update | 10000  |         30.71 ns |      0.492 ns |      0.436 ns |        - |        - |        - |         - |
+       | Remove | 10000  |         18.58 ns |      0.386 ns |      0.379 ns |        - |        - |        - |         - |
+       | Insert | 100000 | 11,136,329.47 ns | 54,222.280 ns | 50,719.554 ns | 562.5000 | 343.7500 | 187.5000 | 4800252 B |
+       | Search | 100000 |         37.59 ns |      0.772 ns |      0.977 ns |        - |        - |        - |         - |
+       | Update | 100000 |         37.97 ns |      0.787 ns |      1.023 ns |        - |        - |        - |         - |
+       | Remove | 100000 |         23.61 ns |      0.418 ns |      0.391 ns |        - |        - |        - |         - |
        
        
        Very fast searching, updating and removing. Size of the table has very little effect on these operations.
@@ -52,6 +55,8 @@ public class HashTableBenchmarks
        
        Insertion/Removing in Stack, Dequeue is faster O(1) but no random index accessor.
        
+       Linked List better at removing and inserting but you need to know which node. Finding a node is linear O(n)
+       
        This benchmark proves that weak points of a hash table are insertion when table grows large and memory usage.
        Other operations are fast and size of table has little impact on them.
             */
@@ -59,13 +64,6 @@ public class HashTableBenchmarks
     [Benchmark]
     public void Insert()
     {
-        /*
-         * | Method | N     | Mean       | Error     | StdDev    | Gen0    | Gen1    | Allocated |
-           |------- |------ |-----------:|----------:|----------:|--------:|--------:|----------:|
-           | Insert | 100   |   1.949 us | 0.0243 us | 0.0227 us |  0.5836 |  0.0019 |   4.77 KB |
-           | Insert | 10000 | 328.415 us | 5.5247 us | 5.1678 us | 57.1289 | 14.1602 | 468.84 KB |
-
-         */
         var localHashTable = new HashTable<string, List<int>>(N);
 
         foreach (var keyValuePair in _data)
@@ -77,38 +75,19 @@ public class HashTableBenchmarks
     [Benchmark]
     public void Search()
     {
-        /*
-         * | Method | N     | Mean     | Error     | StdDev    | Allocated |
-           |------- |------ |---------:|----------:|----------:|----------:|
-           | Search | 100   | 3.528 ns | 0.0304 ns | 0.0254 ns |         - |
-           | Search | 10000 | 4.013 ns | 0.0074 ns | 0.0062 ns |         - |
-
-         */
-        _ = _hashTable.Search(_keyToSearch);
+        _ = _hashTable.Search(GetRandomKey());
     }
 
     [Benchmark]
     public void Update()
     {
-        /*
-         * | Method | N     | Mean     | Error     | StdDev    | Allocated |
-           |------- |------ |---------:|----------:|----------:|----------:|
-           | Search | 100   | 3.528 ns | 0.0304 ns | 0.0254 ns |         - |
-           | Search | 10000 | 4.013 ns | 0.0074 ns | 0.0062 ns |         - |
-         */
-        _hashTable.Update(_keyToUpdate, _newValue);
+        _hashTable.Update(GetRandomKey(), _newValue);
     }
 
     [Benchmark]
     public void Remove()
     {
-        /*
-         *  | Method | N     | Mean     | Error     | StdDev    | Allocated |
-           |------- |------ |---------:|----------:|----------:|----------:|
-           | Remove | 100   | 7.324 ns | 0.0327 ns | 0.0306 ns |         - |
-           | Remove | 10000 | 3.762 ns | 0.0111 ns | 0.0098 ns |         - |
-         */
-        _hashTable.Remove(_keyToRemove);
+        _hashTable.Remove(GetRandomKey());
     }
 
 
@@ -121,15 +100,6 @@ public class HashTableBenchmarks
         }
 
         return data;
-    }
-
-    private void ResetHashTable()
-    {
-        _hashTable = new HashTable<string, List<int>>(N);
-        foreach (var keyValuePair in _data)
-        {
-            _hashTable.Insert(keyValuePair.Key, keyValuePair.Value);
-        }
     }
 
     private string GetRandomKey()
