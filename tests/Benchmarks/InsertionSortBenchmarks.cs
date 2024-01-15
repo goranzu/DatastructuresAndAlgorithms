@@ -31,16 +31,12 @@ public class InsertionSortBenchmarks
     [Benchmark]
     public void InsertionSortBenchmark()
     {
-        // 100: 1.133 us 
-        // 1_000: 113.025 us
-        // 10_0000: 11,258.300 us
-        // 100_000: 1,114,860.642 us
-        
-        // O(n²)
-        // For small data sets, it is pretty fast. Quadratic growth -> when size increase by 10 (100 to 1000)
-        // time increases by 100 (1.13 us to 113.025 us) 
-        
         /*
+            O(n²)
+            For small data sets, it is pretty fast. Quadratic growth -> when size increase by 10 (100 to 1000)
+            time increases by 100 (1.13 us to 113.025 us) 
+            
+        
          * | Method                 | N      | Mean             | Error          | StdDev         | Gen0   | Allocated |
            |----------------------- |------- |-----------------:|---------------:|---------------:|-------:|----------:|
            | InsertionSortBenchmark | 100    |         1.192 us |      0.0228 us |      0.0280 us | 0.0496 |     424 B |

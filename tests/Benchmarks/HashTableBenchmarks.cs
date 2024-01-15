@@ -59,6 +59,8 @@ public class HashTableBenchmarks
        
        This benchmark proves that weak points of a hash table are insertion when table grows large and memory usage.
        Other operations are fast and size of table has little impact on them.
+       
+       Memory is especially bad because of Chaining. Linked Lists need to store extra pointers.
             */
 
     [Benchmark]
