@@ -21,11 +21,12 @@ public interface IDynamicArray<T>
 public sealed class DynamicArray<T> : IDynamicArray<T>
 {
     public int Count { get; private set; } = 0;
-    public int Capacity { get; } = 10;
+    public int Capacity { get; }
     private T[] _data;
 
-    public DynamicArray()
+    public DynamicArray(int capacity = 10)
     {
+        Capacity = capacity;
         _data = new T[Capacity];
     }
 
@@ -54,11 +55,9 @@ public sealed class DynamicArray<T> : IDynamicArray<T>
 
             for (var i = Count; i > index; i--)
             {
-                // shift all items on place to the right from the index i want to insert in
                 _data[i] = _data[i - 1];
             }
 
-            // insert at the index
             _data[index] = value;
             Count++;
         }

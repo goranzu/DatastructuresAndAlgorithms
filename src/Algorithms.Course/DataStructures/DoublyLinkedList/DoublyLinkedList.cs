@@ -294,16 +294,4 @@ public sealed class DoublyLinkedList<T> : IDoublyLinkedList<T>
         Tail = null;
         Count = 0;
     }
-
-    public void Display()
-    {
-        var current = Head;
-        while (current != null)
-        {
-            Console.Write(current.Val + " <-> ");
-            current = current.Next;
-        }
-
-        Console.WriteLine("null");
-    }
 }
