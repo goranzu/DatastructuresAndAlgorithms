@@ -23,8 +23,6 @@ public interface IGraph
     void BuildFromWeightedAdjacencyList(List<List<List<double>>> weightedAdjacencyList);
 
     void BuildFromWeightedAdjacencyMatrix(List<List<double>> weightedAdjacencyMatrix);
-
-    // List<Vertex> DijkstraShortestPath(Vertex start, Vertex end);
     List<Edge> DijkstraShortestPath(Vertex start, Vertex end);
 }
 
@@ -162,7 +160,6 @@ public class Graph : IGraph
     {
         var distances = new Dictionary<int, double>();
         var previous = new Dictionary<int, int>();
-        // var nodes = new List<int>();
         var nodes = new PriorityQueue<Vertex, double>();
 
         foreach (var vertex in _vertices)
@@ -178,7 +175,6 @@ public class Graph : IGraph
                 nodes.Enqueue(vertex.Value, double.PositiveInfinity);
             }
 
-            // nodes.Add(vertex.Key);
         }
 
         while (nodes.Count != 0)
@@ -220,41 +216,6 @@ public class Graph : IGraph
                     nodes.Enqueue(_vertices[neighbor.To.Id], alt);
                 }
             }
-
-            // old code that does not use a priority queue
-
-            // nodes.Sort((x, y) => distances[x] < distances[y] ? -1 : 1);
-            //
-            // var smallest = nodes[0];
-            // nodes.Remove(smallest);
-            //
-            // if (smallest == end.Id)
-            // {
-            //     var path = new List<Edge>();
-            //     while (previous.ContainsKey(smallest))
-            //     {
-            //         path.Add(_edges.Find(e => e.From.Id == previous[smallest] && e.To.Id == smallest)!);
-            //         smallest = previous[smallest];
-            //     }
-            //
-            //     path.Reverse();
-            //     return path;
-            // }
-            //
-            // if (double.IsPositiveInfinity(distances[smallest]))
-            // {
-            //     break;
-            // }
-            //
-            // foreach (var neighbor in GetNeighbors(smallest))
-            // {
-            //     var alt = distances[smallest] + neighbor.Weight;
-            //     if (alt < distances[neighbor.To.Id])
-            //     {
-            //         distances[neighbor.To.Id] = alt;
-            //         previous[neighbor.To.Id] = smallest;
-            //     }
-            // }
         }
 
         return new List<Edge>();

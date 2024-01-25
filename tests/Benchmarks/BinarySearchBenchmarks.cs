@@ -11,26 +11,24 @@ public class BinarySearchBenchmarks
     private int _needle;
     
     /*
-     * | Method | N       | Mean      | Error     | StdDev   | Median    | Allocated |
-       |------- |-------- |----------:|----------:|---------:|----------:|----------:|
-       | Search | 10      |  50.82 ns |  8.911 ns | 25.85 ns |  41.00 ns |     736 B |
-       | Search | 100     |  69.11 ns |  9.744 ns | 28.11 ns |  83.00 ns |     736 B |
-       | Search | 1000    |  73.32 ns |  7.540 ns | 19.99 ns |  83.00 ns |     736 B |
-       | Search | 10000   | 125.13 ns | 14.093 ns | 39.52 ns | 125.00 ns |     736 B |
-       | Search | 100000  | 115.77 ns |  8.264 ns | 20.88 ns | 125.00 ns |     736 B |
-       | Search | 1000000 | 222.38 ns | 28.731 ns | 82.90 ns | 208.00 ns |     736 B |
+     * | Method | N       | Mean      | Error    | StdDev    | Median    | Allocated |
+       |------- |-------- |----------:|---------:|----------:|----------:|----------:|
+       | Search | 10      |  75.58 ns | 12.89 ns |  37.19 ns |  83.00 ns |     736 B |
+       | Search | 100     | 114.95 ns | 11.93 ns |  33.25 ns | 124.50 ns |     736 B |
+       | Search | 1000    | 170.95 ns | 16.18 ns |  47.72 ns | 167.00 ns |     736 B |
+       | Search | 10000   | 225.37 ns | 16.57 ns |  46.48 ns | 249.00 ns |     736 B |
+       | Search | 100000  | 380.83 ns | 37.99 ns | 108.99 ns | 374.00 ns |     736 B |
+       | Search | 1000000 | 648.24 ns | 68.88 ns | 199.83 ns | 583.00 ns |     736 B |
        
-       BinarySearch has a time complexity of O(log n) and a space complexity of O(1).
-       You can see that the time complexity is logarithmic because the time it takes to search
-       for a value in an array of 1,000,000 elements is only 4 times longer than the time it takes
-       to search for a value in an array of 10 elements.
+       These results show that the binary search is done in O(log n) time.
+       You can see this because the time increases by a small amount when N increases by a large amount.
      */
     
     [IterationSetup]
     public void IterationSetup()
     {
         _array = new int[N];
-        _needle = N / 2;
+        _needle = new Random().Next(0, N);
         
         for (var i = 0; i < N; i++)
         {
@@ -44,16 +42,4 @@ public class BinarySearchBenchmarks
     {
         Algorithms.Course.BinarySearch.Search(_array, _needle);
     }
-    
-    // [GlobalSetup]
-    // public void Setup()
-    // {
-    //     _array = new int[N];
-    //     _needle = N / 2;
-    //     
-    //     for (var i = 0; i < N; i++)
-    //     {
-    //         _array[i] = i;
-    //     }
-    // }
 }

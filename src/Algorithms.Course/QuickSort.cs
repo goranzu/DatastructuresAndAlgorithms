@@ -30,7 +30,7 @@ public static class QuickSort
             }
         }
 
-        Swap(ref array[i + 1], ref array[end]); // Placing pivot in the correct position
+        Swap(ref array[i + 1], ref array[end]);
         return i + 1;
     }
 

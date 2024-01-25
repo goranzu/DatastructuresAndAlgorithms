@@ -62,5 +62,8 @@ public class AvlTests
         var find = avlTree.Find(5877);
         
         Assert.Equal(5877, find);
+        
+        avlTree.Remove(5877);
+        Assert.Equal(default, avlTree.Find(5877));
     }
 }
