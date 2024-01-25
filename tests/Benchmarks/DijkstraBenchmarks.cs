@@ -27,9 +27,19 @@ public class DijkstraBenchmarks
        | DijkstraShortestPathBenchmark | 100              |     387.199 us |      5.9165 us |      5.2448 us | 9.2773 |      - |    78.9 KB |
        | DijkstraShortestPathBenchmark | 1000             | 283,553.835 us | 10,260.5945 us | 30,253.5943 us |      - |      - | 3625.43 KB |
        
+       // When using a priority queue and a high density graph
+       | Method                        | NumberOfVertices | Mean            | Error         | StdDev        | Gen0     | Gen1   | Allocated  |
+       |------------------------------ |----------------- |----------------:|--------------:|--------------:|---------:|-------:|-----------:|
+       | DijkstraShortestPathBenchmark | 10               |        486.2 ns |       3.13 ns |       2.92 ns |   0.3080 |      - |    2.52 KB |
+       | DijkstraShortestPathBenchmark | 100              |      9,610.4 ns |      39.56 ns |      37.01 ns |   2.7924 | 0.0610 |   22.86 KB |
+       | DijkstraShortestPathBenchmark | 1000             | 89,037,086.6 ns | 707,207.31 ns | 661,522.16 ns | 166.6667 |      - | 1732.06 KB |
+       
        You can clearly see what difference the density of the graph makes. The higher the density, the more edges there are to check.
        This results in a higher time complexity. The space complexity is the same for both graphs. The time complexity in the dense graph gets closer to O(n^2) than the sparse graph.
        So worst case time complexity is O(n^2) and best case time complexity is O(n).
+       
+       When using a priority queue, the time complexity is (N) log N, where N is the number of vertices and E is the number of edges. This is much faster than the naive implementation.
+       When using a list, the time complexity is O(N^2), where N is the number of vertices and E is the number of edges. This is much slower than the priority queue implementation.
      */
 
     [GlobalSetup]

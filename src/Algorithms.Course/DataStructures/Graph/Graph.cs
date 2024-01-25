@@ -21,10 +21,11 @@ public interface IGraph
     void BuildFromAdjacencyMatrix(List<List<int>> adjacencyMatrix);
     void BuildFromWeightedEdgeList(List<List<double>> weightedEdgeList);
     void BuildFromWeightedAdjacencyList(List<List<List<double>>> weightedAdjacencyList);
+
     void BuildFromWeightedAdjacencyMatrix(List<List<double>> weightedAdjacencyMatrix);
+
     // List<Vertex> DijkstraShortestPath(Vertex start, Vertex end);
     List<Edge> DijkstraShortestPath(Vertex start, Vertex end);
-    
 }
 
 public class Graph : IGraph
@@ -161,61 +162,104 @@ public class Graph : IGraph
     {
         var distances = new Dictionary<int, double>();
         var previous = new Dictionary<int, int>();
-        var nodes = new List<int>();
+        // var nodes = new List<int>();
+        var nodes = new PriorityQueue<Vertex, double>();
 
         foreach (var vertex in _vertices)
         {
             if (vertex.Key == start.Id)
             {
                 distances[vertex.Key] = 0;
+                nodes.Enqueue(vertex.Value, 0);
             }
             else
             {
                 distances[vertex.Key] = double.PositiveInfinity;
+                nodes.Enqueue(vertex.Value, double.PositiveInfinity);
             }
 
-            nodes.Add(vertex.Key);
+            // nodes.Add(vertex.Key);
         }
 
         while (nodes.Count != 0)
         {
-            nodes.Sort((x, y) => distances[x] < distances[y] ? -1 : 1);
+            var smallest = nodes.Dequeue();
+            var currentId = smallest.Id;
 
-            var smallest = nodes[0];
-            nodes.Remove(smallest);
-
-            if (smallest == end.Id)
+            if (currentId == end.Id)
             {
                 var path = new List<Edge>();
-                while (previous.ContainsKey(smallest))
+                while (previous.ContainsKey(currentId))
                 {
-                    path.Add(_edges.Find(e => e.From.Id == previous[smallest] && e.To.Id == smallest)!);
-                    smallest = previous[smallest];
+                    var prevVertex = previous[currentId];
+                    var edge = _edges.Find(e => e.From.Id == prevVertex && e.To.Id == currentId)!;
+                    if (edge is not null)
+                    {
+                        path.Add(edge);
+                    }
+
+                    currentId = prevVertex;
                 }
 
                 path.Reverse();
                 return path;
             }
 
-            if (double.IsPositiveInfinity(distances[smallest]))
+            if (double.IsPositiveInfinity(distances[currentId]))
             {
                 break;
             }
 
-            foreach (var neighbor in GetNeighbors(smallest))
+            foreach (var neighbor in GetNeighbors(currentId))
             {
-                var alt = distances[smallest] + neighbor.Weight;
+                var alt = distances[currentId] + neighbor.Weight;
                 if (alt < distances[neighbor.To.Id])
                 {
                     distances[neighbor.To.Id] = alt;
-                    previous[neighbor.To.Id] = smallest;
+                    previous[neighbor.To.Id] = currentId;
+                    nodes.Enqueue(_vertices[neighbor.To.Id], alt);
                 }
             }
+
+            // old code that does not use a priority queue
+
+            // nodes.Sort((x, y) => distances[x] < distances[y] ? -1 : 1);
+            //
+            // var smallest = nodes[0];
+            // nodes.Remove(smallest);
+            //
+            // if (smallest == end.Id)
+            // {
+            //     var path = new List<Edge>();
+            //     while (previous.ContainsKey(smallest))
+            //     {
+            //         path.Add(_edges.Find(e => e.From.Id == previous[smallest] && e.To.Id == smallest)!);
+            //         smallest = previous[smallest];
+            //     }
+            //
+            //     path.Reverse();
+            //     return path;
+            // }
+            //
+            // if (double.IsPositiveInfinity(distances[smallest]))
+            // {
+            //     break;
+            // }
+            //
+            // foreach (var neighbor in GetNeighbors(smallest))
+            // {
+            //     var alt = distances[smallest] + neighbor.Weight;
+            //     if (alt < distances[neighbor.To.Id])
+            //     {
+            //         distances[neighbor.To.Id] = alt;
+            //         previous[neighbor.To.Id] = smallest;
+            //     }
+            // }
         }
 
         return new List<Edge>();
     }
-    
+
     public bool HasEdge(Vertex from, Vertex to)
     {
         foreach (var edge in _edges)
@@ -225,9 +269,10 @@ public class Graph : IGraph
                 return true;
             }
         }
+
         return false;
     }
-    
+
     private List<Edge> GetNeighbors(int id)
     {
         var neighbors = new List<Edge>();
@@ -241,76 +286,4 @@ public class Graph : IGraph
 
         return neighbors;
     }
-
-    // public List<Vertex> DijkstraShortestPath(Vertex start, Vertex end)
-    // {
-    //     var distances = new Dictionary<int, double>();
-    //     var previous = new Dictionary<int, int>();
-    //     var nodes = new List<int>();
-    //
-    //     foreach (var vertex in _vertices)
-    //     {
-    //         if (vertex.Key == start.Id)
-    //         {
-    //             distances[vertex.Key] = 0;
-    //         }
-    //         else
-    //         {
-    //             distances[vertex.Key] = double.PositiveInfinity;
-    //         }
-    //
-    //         nodes.Add(vertex.Key);
-    //     }
-    //
-    //     while (nodes.Count != 0)
-    //     {
-    //         nodes.Sort((x, y) => distances[x] < distances[y] ? -1 : 1);
-    //
-    //         var smallest = nodes[0];
-    //         nodes.Remove(smallest);
-    //
-    //         if (smallest == end.Id)
-    //         {
-    //             var path = new List<Vertex>();
-    //             while (previous.ContainsKey(smallest))
-    //             {
-    //                 path.Add(_vertices[smallest]);
-    //                 smallest = previous[smallest];
-    //             }
-    //
-    //             return path;
-    //         }
-    //
-    //         if (double.IsPositiveInfinity(distances[smallest]))
-    //         {
-    //             break;
-    //         }
-    //
-    //         foreach (var neighbor in GetNeighbors(smallest))
-    //         {
-    //             var alt = distances[smallest] + neighbor.Weight;
-    //             if (alt < distances[neighbor.To.Id])
-    //             {
-    //                 distances[neighbor.To.Id] = alt;
-    //                 previous[neighbor.To.Id] = smallest;
-    //             }
-    //         }
-    //     }
-    //
-    //     return new List<Vertex>();
-    // }
-    //
-    // private List<Edge> GetNeighbors(int id)
-    // {
-    //     var neighbors = new List<Edge>();
-    //     foreach (var edge in _edges)
-    //     {
-    //         if (edge.From.Id == id)
-    //         {
-    //             neighbors.Add(edge);
-    //         }
-    //     }
-    //
-    //     return neighbors;
-    // }
 }

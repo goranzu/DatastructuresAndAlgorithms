@@ -15,4 +15,6 @@ using Benchmarks;
 // BenchmarkRunner.Run<PriorityQueueBenchmarks>();
 // BenchmarkRunner.Run<BinarySearchBenchmarks>();
 // BenchmarkRunner.Run<GraphBenchmarks>();
-BenchmarkRunner.Run<DijkstraBenchmarks>();
+// BenchmarkRunner.Run<DijkstraBenchmarks>();
+// BenchmarkRunner.Run<AvlBenchmarks>();
+BenchmarkRunner.Run<StackBenchmarks>();

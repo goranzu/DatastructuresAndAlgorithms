@@ -1,9 +1,38 @@
 using Algorithms.Course.DataStructures.DynamicArray;
+using Newtonsoft.Json;
+using UnitTests.SortingTests;
 
 namespace UnitTests.DataStructureTests;
 
 public class DynamicArrayTests
 {
+    private SortingData _sortingData;
+
+    public DynamicArrayTests()
+    {
+        using StreamReader reader = new("./Data/sortingData.json");
+        var json = reader.ReadToEnd();
+        var data = JsonConvert.DeserializeObject<SortingData>(json);
+        _sortingData = data!;
+    }
+    
+    [Fact]
+    public void TestWithData()
+    {
+        var list = _sortingData.lijst_gesorteerd_aflopend_3;
+        var dynArray = new DynamicArray<int>();
+
+        dynArray.Add(list[0]);
+        dynArray.Add(list[1]);
+        dynArray.Add(list[2]);
+
+        Assert.Equal(3, dynArray.Count);
+        Assert.Equal(3, dynArray.Find(3));
+        Assert.Equal(2, dynArray.IndexOf(1));
+        Assert.True(dynArray.Contains(3));
+        Assert.False(dynArray.Contains(10));
+    }
+    
     [Fact]
     public void TestAdd()
     {

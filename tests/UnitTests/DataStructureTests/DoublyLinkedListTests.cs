@@ -1,9 +1,38 @@
 using Algorithms.Course.DataStructures.DoublyLinkedList;
+using Newtonsoft.Json;
+using UnitTests.SortingTests;
 
 namespace UnitTests.DataStructureTests;
 
 public class DoublyLinkedListTests
 {
+    private SortingData _sortingData;
+
+    public DoublyLinkedListTests()
+    {
+        using StreamReader reader = new("./Data/sortingData.json");
+        var json = reader.ReadToEnd();
+        var data = JsonConvert.DeserializeObject<SortingData>(json);
+        _sortingData = data!;
+    }
+
+    [Fact]
+    public void TestAddFirstWithData()
+    {
+        var list = _sortingData.lijst_gesorteerd_aflopend_3;
+        var linkedList = new DoublyLinkedList<int>();
+
+        linkedList.AddFirst(list[0]);
+        linkedList.AddFirst(list[1]);
+        linkedList.AddFirst(list[2]);
+
+        Assert.Equal(3, linkedList.Count);
+        Assert.Equal(1, linkedList.GetFirst());
+        Assert.Equal(3, linkedList.GetLast());
+        Assert.True(linkedList.Contains(3));
+        Assert.False(linkedList.Contains(10));
+    }
+
     [Fact]
     public void TestAddFirst()
     {

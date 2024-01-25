@@ -29,6 +29,7 @@ public class HashTable<TKey, TValue> : IHashTable<TKey, TValue>
     private int _size;
     public int Count { get; private set; } = 0;
 
+    
     public HashTable(int size)
     {
         this._size = size;

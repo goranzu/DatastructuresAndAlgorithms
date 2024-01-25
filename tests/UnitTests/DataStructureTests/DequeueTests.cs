@@ -1,9 +1,62 @@
 ﻿using Algorithms.Course.DataStructures.Queue;
+using Newtonsoft.Json;
+using UnitTests.SortingTests;
 
 namespace UnitTests.DataStructureTests;
 
 public class DequeueTests
 {
+    private SortingData _sortingData;
+
+    public DequeueTests()
+    {
+        using StreamReader reader = new("./Data/sortingData.json");
+        var json = reader.ReadToEnd();
+        var data = JsonConvert.DeserializeObject<SortingData>(json);
+        _sortingData = data!;
+    }
+
+    [Fact]
+    public void DeleteLeftFromData()
+    {
+        var deq = new Dequeue<int>();
+        foreach (var item in _sortingData.lijst_gesorteerd_aflopend_3)
+        {
+            deq.InsertRight(item);
+        }
+        Assert.Equal(3, deq.Count);
+        
+        var result = deq.DeleteLeft();
+        Assert.Equal(3, result);
+        
+        result = deq.DeleteLeft();
+        Assert.Equal(2, result);
+        
+        result = deq.DeleteLeft();
+        Assert.Equal(1, result);
+    }
+
+    [Fact]
+    public void DeleteRightFromData()
+    {
+        var deq = new Dequeue<int>();
+        foreach (var item in _sortingData.lijst_gesorteerd_aflopend_3)
+        {
+            deq.InsertLeft(item);
+        }
+        
+        Assert.Equal(3, deq.Count);
+        
+        var result = deq.DeleteRight();
+        Assert.Equal(3, result);
+        
+        result = deq.DeleteRight();
+        Assert.Equal(2, result);
+        
+        result = deq.DeleteRight();
+        Assert.Equal(1, result);
+    }
+    
     [Fact]
     public void insert_left_should_insert_items_correctly()
     {
