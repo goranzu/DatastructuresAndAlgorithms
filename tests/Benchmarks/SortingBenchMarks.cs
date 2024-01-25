@@ -88,14 +88,7 @@ public class SortingBenchMarks
     public void MergeSortBenchmark()
     {
         var dataToSort = (int[])_data.Clone();
-        MergeSort.Sort(dataToSort);
-    }
-
-    [Benchmark]
-    public void MergeSortWithoutParallelismBenchmark()
-    {
-        var dataToSort = (int[])_data.Clone();
-        MergeSort.SortWithOutParallelism(dataToSort);
+        MergeSort.Sort(dataToSort, 0, dataToSort.Length - 1);
     }
 
     [Benchmark]

@@ -22,7 +22,7 @@ public class MergeSortTests
         var testData = _sortingData.lijst_gesorteerd_aflopend_3.ToArray();
         var expected = _sortingData.lijst_gesorteerd_oplopend_3.ToArray();
 
-        MergeSort.Sort(testData);
+        MergeSort.Sort(testData, 0, testData.Length);
 
         Assert.Equal(expected, testData);
     }
@@ -33,7 +33,7 @@ public class MergeSortTests
         var testData = _sortingData.lijst_oplopend_10000.ToArray();
         var expected = _sortingData.lijst_oplopend_10000.ToArray();
 
-        MergeSort.Sort(testData);
+        MergeSort.Sort(testData, 0, testData.Length);
 
         Assert.Equal(expected, testData);
     }
@@ -42,7 +42,7 @@ public class MergeSortTests
     public void merge_sort_should_sort_descending_lists()
     {
         int[] testData = _sortingData.lijst_aflopend_2.ToArray();
-        MergeSort.Sort(testData);
+        MergeSort.Sort(testData, 0, testData.Length);
         Assert.Equal([-10033224, 1], testData);
     }
 
@@ -50,7 +50,7 @@ public class MergeSortTests
     public void merge_sort_should_sort_ascending_lists()
     {
         int[] testData = _sortingData.lijst_oplopend_2.ToArray();
-        MergeSort.Sort(testData);
+        MergeSort.Sort(testData, 0, testData.Length);
         Assert.Equal([-100324, 1023], testData);
     }
 
@@ -58,11 +58,11 @@ public class MergeSortTests
     public void merge_sort_should_sort_float_lists()
     {
         float[] testData = _sortingData.lijst_float_8001.ToArray();
-        MergeSort.Sort(testData);
+        MergeSort.Sort(testData, 0, testData.Length);
 
-        // Sort with the standard library
+        // Sort with the , 0, testData.Lengthstandard library
         float[] expected = testData.ToArray();
-        Array.Sort(expected);
+        Array.Sort(expected, 0, testData.Length);
 
         Assert.Equal(expected, testData);
     }
@@ -71,7 +71,7 @@ public class MergeSortTests
     public void merge_sort_should_sort_empty_lists()
     {
         int[] testData = _sortingData.lijst_leeg_0.ToArray();
-        MergeSort.Sort(testData);
+        MergeSort.Sort(testData, 0, testData.Length);
         Assert.Empty(testData);
     }
 
@@ -79,7 +79,7 @@ public class MergeSortTests
     public void merge_sort_should_sort_single_element_lists()
     {
         int[] testData = [1];
-        MergeSort.Sort(testData);
+        MergeSort.Sort(testData, 0, testData.Length);
         Assert.Equal([1], testData);
     }
 
@@ -87,7 +87,7 @@ public class MergeSortTests
     public void merge_sort_should_sort_single_null_lists()
     {
         var testData = _sortingData.lijst_null_1.ToArray();
-        MergeSort.Sort(testData);
+        MergeSort.Sort(testData, 0, testData.Length);
         Assert.Equal(new int?[] { null }, testData);
     }
 
@@ -96,7 +96,16 @@ public class MergeSortTests
     {
         // null is treated as the lowest value
         var testData = _sortingData.lijst_null_3.ToArray();
-        MergeSort.Sort(testData);
+        MergeSort.Sort(testData, 0, testData.Length);
         Assert.Equal(new int?[] { null, 1, 3 }, testData);
+    }
+
+    [Fact]
+    public void merge_sort_should_sort_a_random_list()
+    {
+        // null is treated as the lowest value
+        var testData = new[] { 5, 2, 99, 1, 6, 9 };
+        MergeSort.Sort(testData, 0, testData.Length);
+        Assert.Equal(new int[] { 1, 2, 5, 6, 9, 99 }, testData);
     }
 }

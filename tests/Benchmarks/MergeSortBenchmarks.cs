@@ -16,8 +16,9 @@ public class MergeSortBenchmarks
         _random = new Random(42);
     }
 
-    [GlobalSetup]
-    public void Setup()
+
+    [IterationSetup]
+    public void IterationSetup()
     {
         _data = new int[N];
 
@@ -26,6 +27,7 @@ public class MergeSortBenchmarks
             _data[i] = _random.Next(N);
         }
     }
+
 
     [Benchmark]
     public void MergeSortBenchmark()
@@ -49,6 +51,24 @@ public class MergeSortBenchmarks
            | MergeSortBenchmark | 100000 | 10,637.85 us | 106.884 us | 99.980 us | 10,655.18 us | 7468.7500 | 718.7500 | 468.7500 | 59799.98 KB |
            
            
+           With in place sorting
+           | Method             | N      | Mean            | Error        | StdDev       | Allocated |
+           |------------------- |------- |----------------:|-------------:|-------------:|----------:|
+           | MergeSortBenchmark | 100    |        25.70 us |     0.760 us |     2.204 us |     736 B |
+           | MergeSortBenchmark | 1000   |       389.18 us |     6.446 us |     5.714 us |     736 B |
+           | MergeSortBenchmark | 10000  |    14,268.11 us |    67.129 us |    96.275 us |     736 B |
+           | MergeSortBenchmark | 100000 | 1,369,726.22 us | 3,810.183 us | 2,974.740 us |     736 B |
+           
+           
+           With in place sorting and parallelism
+           | Method             | N      | Mean          | Error        | StdDev      | Median        | Gen0      | Allocated  |
+           |------------------- |------- |--------------:|-------------:|------------:|--------------:|----------:|-----------:|
+           | MergeSortBenchmark | 100    |      88.47 us |     9.137 us |    26.80 us |      94.96 us |         - |   50.34 KB |
+           | MergeSortBenchmark | 1000   |     353.61 us |    10.263 us |    29.61 us |     345.46 us |         - |  494.18 KB |
+           | MergeSortBenchmark | 10000  |  11,937.02 us |   235.423 us |   418.46 us |  12,005.04 us |         - | 4925.02 KB |
+           | MergeSortBenchmark | 100000 | 940,648.68 us | 2,576.734 us | 2,410.28 us | 940,205.33 us | 6000.0000 |   49221 KB |
+
+
            | Method                               | N      | Mean         | Error      | StdDev     | Gen0      | Gen1     | Gen2     | Allocated   |
            |------------------------------------- |------- |-------------:|-----------:|-----------:|----------:|---------:|---------:|------------:|
            | MergeSortBenchmark                   | 100    |     20.25 us |   0.366 us |   0.965 us |    6.9580 |   0.2441 |        - |    56.63 KB |
@@ -60,15 +80,14 @@ public class MergeSortBenchmarks
            | MergeSortBenchmark                   | 100000 | 10,513.35 us | 151.539 us | 141.749 us | 7468.7500 | 734.3750 | 484.3750 | 59799.68 KB |
            | MergeSortWithoutParallelismBenchmark | 100000 | 11,397.80 us | 134.239 us | 125.567 us | 7250.0000 | 734.3750 | 703.1250 | 59802.89 KB |
          */
-        
-        var dataToSort = (int[])_data.Clone();
-        MergeSort.Sort(dataToSort);
+
+        MergeSort.Sort(_data, 0, _data.Length);
     }
-    
-    [Benchmark]
-    public void MergeSortWithoutParallelismBenchmark()
-    {
-        var dataToSort = (int[])_data.Clone();
-        MergeSort.SortWithOutParallelism(dataToSort);
-    }
+
+    // [Benchmark]
+    // public void MergeSortWithoutParallelismBenchmark()
+    // {
+    //     var dataToSort = (int[])_data.Clone();
+    //     MergeSort.SortWithOutParallelism(dataToSort,0 , dataToSort.Length);
+    // }
 }
