@@ -17,10 +17,12 @@ public class DequeueBenchmarks
        | InsertRight | 100   |       271.37 ns |      21.40 ns |        60.72 ns |       251.00 ns |     768 B |
        | DeleteLeft  | 100   |        49.34 ns |      11.43 ns |        32.80 ns |        42.00 ns |     736 B |
        | DeleteRight | 100   |    67,816.77 ns |   8,681.74 ns |    25,598.30 ns |    68,103.50 ns |     736 B |
+       
        | InsertLeft  | 1000  |       250.70 ns |      14.23 ns |        37.98 ns |       250.00 ns |     768 B |
        | InsertRight | 1000  |       310.37 ns |      25.05 ns |        70.64 ns |       292.00 ns |     768 B |
        | DeleteLeft  | 1000  |        59.73 ns |      15.81 ns |        44.34 ns |        42.00 ns |     736 B |
        | DeleteRight | 1000  |   543,184.24 ns |  91,646.39 ns |   270,221.45 ns |   530,729.50 ns |     736 B |
+       
        | InsertLeft  | 10000 |     1,127.33 ns |     249.56 ns |       716.03 ns |     1,083.00 ns |     768 B |
        | InsertRight | 10000 |     1,345.54 ns |     324.28 ns |       919.93 ns |     1,208.00 ns |     768 B |
        | DeleteLeft  | 10000 |       630.61 ns |     198.33 ns |       565.85 ns |       521.00 ns |     736 B |

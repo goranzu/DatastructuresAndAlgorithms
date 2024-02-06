@@ -39,6 +39,10 @@ public class DynamicArrayBenchmarks
        | ContainsBenchmark      | 1000 |  6,240.05 ns | 1,078.074 ns | 3,178.72 ns |  6,583.00 ns |     736 B |
        | RemoveBenchmark        | 1000 | 10,739.95 ns |   623.552 ns | 1,828.77 ns | 10,583.00 ns |     736 B |
        | RemoveAtBenchmark      | 1000 |  2,933.36 ns |   484.538 ns | 1,413.42 ns |  3,020.50 ns |     736 B |
+       
+       These results show that the Add, InsertAt, Remove, and RemoveAt methods are O(1) operations.
+       Find, Contains, and IndexOf methods are O(n) operations.
+       Resizing the array is the most expensive operation.
      */
 
     [IterationSetup]

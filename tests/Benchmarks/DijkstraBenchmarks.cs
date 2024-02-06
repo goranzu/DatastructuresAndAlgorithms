@@ -13,14 +13,14 @@ public class DijkstraBenchmarks
 
     /*
      *
-     * With low density
+     * With low density (no priority queue)
        | Method                        | NumberOfVertices | Mean           | Error       | StdDev      | Gen0     | Gen1     | Gen2     | Allocated  |
        |------------------------------ |----------------- |---------------:|------------:|------------:|---------:|---------:|---------:|-----------:|
        | DijkstraShortestPathBenchmark | 10               |       247.7 ns |     1.91 ns |     1.69 ns |   0.1836 |   0.0005 |        - |     1.5 KB |
        | DijkstraShortestPathBenchmark | 100              |     5,445.2 ns |     7.80 ns |     7.29 ns |   1.3962 |   0.0305 |        - |   11.43 KB |
        | DijkstraShortestPathBenchmark | 1000             |    83,584.6 ns |   296.44 ns |   247.54 ns |  13.1836 |   2.4414 |        - |  108.37 KB |
        
-       With high density
+       With high density (no priority queue)
        | Method                        | NumberOfVertices | Mean           | Error          | StdDev         | Gen0   | Gen1   | Allocated  |
        |------------------------------ |----------------- |---------------:|---------------:|---------------:|-------:|-------:|-----------:|
        | DijkstraShortestPathBenchmark | 10               |       1.191 us |      0.0230 us |      0.0265 us | 0.3929 | 0.0019 |    3.21 KB |

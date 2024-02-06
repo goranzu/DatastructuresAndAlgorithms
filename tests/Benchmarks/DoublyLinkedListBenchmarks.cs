@@ -79,6 +79,11 @@ public class DoublyLinkedListBenchmarks
        | GetLastBenchmark     | 100000 |      88.942 ns |     39.664 ns |     107.909 ns |      42.0000 ns |     736 B |
        | GetAtBenchmark       | 100000 |  70,243.778 ns | 12,060.834 ns |  35,372.338 ns |  72,208.0000 ns |     736 B |
        | ContainsBenchmark    | 100000 | 225,516.551 ns | 46,452.964 ns | 136,238.503 ns | 213,895.5000 ns | 2720848 B |
+       
+       
+       These results show that the AddFirst, AddLast, RemoveFirst, RemoveLast, GetFirst, and GetLast methods are O(1) operations.
+       InsertAt and RemoveAt methods are O(n) operations.
+       Contains method is O(n) operation.
      */
     
     [IterationSetup]

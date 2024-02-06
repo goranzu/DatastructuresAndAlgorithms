@@ -17,9 +17,11 @@ public class PriorityQueueBenchmarks
        | AddBenchmark  | 10   |  2,705.47 ns |    384.323 ns |  1,133.18 ns |  2,666.0000 ns |     800 B |
        | PollBenchmark | 10   |     44.91 ns |     12.282 ns |     35.44 ns |     41.0000 ns |     736 B |
        | PeekBenchmark | 10   |     18.17 ns |      8.909 ns |     25.99 ns |      0.0000 ns |     736 B |
+       
        | AddBenchmark  | 100  | 11,978.65 ns |  1,401.244 ns |  4,131.60 ns | 12,854.5000 ns |     800 B |
        | PollBenchmark | 100  |    104.45 ns |     26.794 ns |     75.13 ns |     83.0000 ns |     736 B |
        | PeekBenchmark | 100  |     77.45 ns |     23.038 ns |     66.47 ns |     63.0000 ns |     736 B |
+       
        | AddBenchmark  | 1000 | 71,825.53 ns | 12,179.281 ns | 35,910.88 ns | 75,604.0000 ns |     800 B |
        | PollBenchmark | 1000 |    774.65 ns |    179.374 ns |    520.40 ns |    583.5000 ns |     736 B |
        | PeekBenchmark | 1000 |    582.98 ns |    121.763 ns |    353.26 ns |    416.0000 ns |     736 B |
